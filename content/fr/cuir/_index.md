@@ -4,6 +4,7 @@ seoTitle: "Cuir : matières, peaux et tannages expliqués | Cuir et Couture"
 description: "Agneau, veau, chèvre, plongé, nappa, nubuck : comprendre les peaux, les tannages et les finitions du cuir, et savoir reconnaître une belle matière."
 tagline: "Les peaux, les tannages, les finitions. Ce qui fait qu'un cuir est beau, et ce qui fait qu'il ne l'est pas."
 translationKey: "hub-leather"
+weight: 1
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

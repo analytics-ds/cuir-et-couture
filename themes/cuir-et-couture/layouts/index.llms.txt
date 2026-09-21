@@ -10,13 +10,12 @@ Cuir et Couture est un média indépendant consacré au cuir et au savoir-faire 
 {{- end }}
 
 {{ if $isEN }}## Sections{{ else }}## Rubriques{{ end }}
-{{ range .Site.Menus.main }}{{ with site.GetPage .URL }}
+{{ range (where .Site.Sections "Type" "!=" "tags").ByWeight }}
 - [{{ .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Params.tagline | default .Description | htmlUnescape }}
-{{- end }}{{ end }}
+{{- end }}
 
-{{ $hubs := slice }}{{ range .Site.Menus.main }}{{ $hubs = $hubs | append (strings.TrimSuffix "/" (strings.TrimPrefix "/" (replace .URL "/en/" ""))) }}{{ end }}
 {{ if $isEN }}## Articles{{ else }}## Articles{{ end }}
-{{ range (where .Site.RegularPages "Section" "in" $hubs).ByDate.Reverse }}
+{{ range (where .Site.RegularPages "Section" "!=" "").ByDate.Reverse }}
 - [{{ partial "resolveyear" .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Description | htmlUnescape }} ({{ if $isEN }}updated{{ else }}mis à jour le{{ end }} {{ .Lastmod.Format "2006-01-02" }})
 {{- end }}
 

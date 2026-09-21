@@ -4,6 +4,7 @@ seoTitle: "Couture cuir : ateliers, savoir-faire et sur-mesure | Cuir et Couture
 description: "Patronage, montage, finitions, sur-mesure : comment se fabrique un vêtement en cuir de niveau couture, et comment reconnaître un atelier sérieux."
 tagline: "L'atelier plutôt que l'usine. Patronage, montage, sur-mesure, et ce que coûte vraiment le fait main."
 translationKey: "hub-couture"
+weight: 3
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

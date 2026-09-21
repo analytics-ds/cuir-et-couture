@@ -4,6 +4,7 @@ seoTitle: "Mode en cuir : silhouettes, pièces et maisons | Cuir et Couture"
 description: "Robes, pantalons, blousons, combinaisons : les silhouettes en cuir qui fonctionnent, les pièces qui traversent les saisons et les maisons qui comptent."
 tagline: "Les silhouettes, les pièces et les maisons. Ce qui se porte, ce qui dure, ce qui compte."
 translationKey: "hub-style"
+weight: 4
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

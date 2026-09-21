@@ -4,6 +4,7 @@ seoTitle: "Leather couture: ateliers, craftsmanship, made to measure | Cuir et C
 description: "Pattern making, assembly, finishing, made to measure: how a couture-grade leather garment is built, and how to recognise a serious atelier."
 tagline: "Atelier over factory. Pattern making, assembly, made to measure, and what handwork really costs."
 translationKey: "hub-couture"
+weight: 3
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

@@ -4,6 +4,7 @@ seoTitle: "Leather explained: hides, tanning and finishes | Cuir et Couture"
 description: "Lambskin, calf, goat, plonge, nappa, nubuck: understanding hides, tanning methods and finishes, and learning to recognise a good leather."
 tagline: "Hides, tanning, finishes. What makes a leather good, and what makes it ordinary."
 translationKey: "hub-leather"
+weight: 1
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

@@ -4,6 +4,7 @@ seoTitle: "Cuir stretch : définition, fabrication et maisons | Cuir et Couture"
 description: "Le cuir stretch expliqué : comment un cuir devient extensible, ce que ça change à la coupe et au confort, et quelles maisons le maîtrisent vraiment."
 tagline: "Le cuir qui suit le corps. Sa fabrication, ses limites, et les maisons qui le maîtrisent."
 translationKey: "hub-stretch"
+weight: 2
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

@@ -1,12 +1,8 @@
 {{ define "main" }}
 {{- $isEN := eq .Site.Language.Lang "en" -}}
-{{- $sections := slice -}}
-{{- range .Site.Menus.main -}}
-  {{- with site.GetPage .URL }}{{ $sections = $sections | append . }}{{ end -}}
-{{- end -}}
-{{- $hubs := slice -}}
-{{- range .Site.Menus.main -}}{{ $hubs = $hubs | append (strings.TrimSuffix "/" (strings.TrimPrefix "/" (replace .URL "/en/" ""))) }}{{- end -}}
-{{- $posts := (where .Site.RegularPages "Section" "in" $hubs).ByDate.Reverse -}}
+{{- $sections := where .Site.Sections "Type" "!=" "tags" -}}
+{{- $sections = $sections.ByWeight -}}
+{{- $posts := (where .Site.RegularPages "Section" "!=" "").ByDate.Reverse -}}
 
 <section class="field hero-home">
     <div class="container">

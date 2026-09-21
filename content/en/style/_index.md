@@ -4,6 +4,7 @@ seoTitle: "Leather style: silhouettes, pieces and houses | Cuir et Couture"
 description: "Dresses, trousers, jackets, jumpsuits: the leather silhouettes that work, the pieces that outlast seasons, and the houses that matter."
 tagline: "Silhouettes, pieces and houses. What is worn, what lasts, what counts."
 translationKey: "hub-style"
+weight: 4
 date: 2026-09-21
 lastmod: 2026-09-21
 ---

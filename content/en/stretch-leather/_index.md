@@ -4,6 +4,7 @@ seoTitle: "Stretch leather: definition, making and houses | Cuir et Couture"
 description: "Stretch leather explained: how leather is made elastic, what it changes in cut and comfort, and which houses genuinely master it."
 tagline: "Leather that follows the body. How it is made, where its limits are, and who masters it."
 translationKey: "hub-stretch"
+weight: 2
 date: 2026-09-21
 lastmod: 2026-09-21
 ---
