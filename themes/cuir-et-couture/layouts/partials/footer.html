@@ -1,0 +1,46 @@
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+<footer class="site-footer">
+    <div class="container">
+        <p class="footer-mark">Cuir <span class="et">et</span> Couture</p>
+
+        <div class="footer-grid">
+            <div class="footer-col">
+                <span class="kicker">{{ if $isEN }}The magazine{{ else }}Le média{{ end }}</span>
+                <p>{{ .Site.Params.description }}</p>
+            </div>
+
+            <div class="footer-col">
+                <span class="kicker">{{ if $isEN }}Sections{{ else }}Rubriques{{ end }}</span>
+                <ul>
+                    {{ range .Site.Menus.main }}<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>{{ end }}
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <span class="kicker">{{ if $isEN }}About{{ else }}À propos{{ end }}</span>
+                <ul>
+                    <li><a href="{{ (cond $isEN "about/" "a-propos/") | relLangURL }}">{{ if $isEN }}Who we are &amp; method{{ else }}Qui nous sommes et méthode{{ end }}</a></li>
+                    <li><a href="{{ (cond $isEN "authors/" "auteurs/") | relLangURL }}">{{ if $isEN }}Contributors{{ else }}La rédaction{{ end }}</a></li>
+                    <li><a href="{{ "contact/" | relLangURL }}">Contact</a></li>
+                    <li><a href="{{ (cond $isEN "legal-notice/" "mentions-legales/") | relLangURL }}">{{ if $isEN }}Legal notice{{ else }}Mentions légales{{ end }}</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <span class="kicker">{{ if $isEN }}Follow{{ else }}Suivre{{ end }}</span>
+                <ul>
+                    {{ with .Site.Params.instagram }}<li><a href="{{ . }}" rel="noopener">Instagram</a></li>{{ end }}
+                    {{ with .Site.Params.pinterest }}<li><a href="{{ . }}" rel="noopener">Pinterest</a></li>{{ end }}
+                    {{ with .Site.Params.x }}<li><a href="{{ . }}" rel="noopener">X</a></li>{{ end }}
+                    {{ with .OutputFormats.Get "rss" }}<li><a href="{{ .Permalink }}">RSS</a></li>{{ end }}
+                    {{ with $.Site.Params.email }}<li><a href="mailto:{{ . }}">{{ . }}</a></li>{{ end }}
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy; {{ now.Year }} {{ .Site.Title }}. {{ if $isEN }}Independent magazine. No sponsored content.{{ else }}Média indépendant. Aucun contenu sponsorisé.{{ end }}</span>
+            <span>{{ if $isEN }}Paris{{ else }}Paris{{ end }}</span>
+        </div>
+    </div>
+</footer>

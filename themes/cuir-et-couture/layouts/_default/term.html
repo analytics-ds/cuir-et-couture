@@ -1,0 +1,39 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+{{- $initials := "" }}{{ range (split .Title " ") }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+
+<section class="field hero-page">
+    <div class="container">
+        <nav class="breadcrumb kicker">
+            <a href="{{ cond $isEN "/en/" "/" }}">{{ if $isEN }}Home{{ else }}Accueil{{ end }}</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ if $isEN }}Contributors{{ else }}La rédaction{{ end }}</span>
+        </nav>
+        <div class="author-head">
+            <span class="avatar">{{ with .Params.photo }}<img src="{{ strings.TrimPrefix "/" . | relURL }}" alt="{{ $.Title }}">{{ else }}{{ $initials }}{{ end }}</span>
+            <div>
+                <h1>{{ .Title }}</h1>
+                {{ with .Params.role }}<p class="hero-lede" style="margin-top:14px">{{ . }}</p>{{ end }}
+                {{ with .Params.expertise }}<div class="author-expertise">{{ range . }}<span>{{ . }}</span>{{ end }}</div>{{ end }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {{ with .Params.bio }}<div class="prose" style="margin-bottom:48px"><p>{{ . }}</p></div>{{ end }}
+        {{ with .Content }}<div class="prose" style="margin-bottom:48px">{{ . }}</div>{{ end }}
+
+        <div class="section-head">
+            <h2>{{ if $isEN }}Articles{{ else }}Ses articles{{ end }}</h2>
+            <span class="kicker">{{ len .Pages }}</span>
+        </div>
+        {{ if .Pages }}
+        <div class="cards">{{ range .Pages.ByDate.Reverse }}{{ partial "card.html" . }}{{ end }}</div>
+        {{ else }}
+        <p class="empty-note">{{ if $isEN }}No article yet.{{ else }}Pas encore d'article.{{ end }}</p>
+        {{ end }}
+    </div>
+</section>
+{{ end }}

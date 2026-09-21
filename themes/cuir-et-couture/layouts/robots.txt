@@ -1,0 +1,17 @@
+# {{ .Site.Title }}
+# {{ .Site.BaseURL }}
+{{- $prodHost := "cuir-et-couture.fr" }}
+{{- $isProdHost := strings.Contains (urls.Parse .Site.BaseURL).Host $prodHost }}
+{{- if not $isProdHost }}
+
+# Preversion servie hors du domaine final : crawl interdit (volontaire).
+# Se leve automatiquement des que le site est servi sur {{ $prodHost }}.
+User-agent: *
+Disallow: /
+{{- else }}
+
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- end }}

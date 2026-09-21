@@ -1,0 +1,13 @@
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+<a class="card" href="{{ .RelPermalink }}">
+    {{ with .Params.image }}
+    <span class="card-media"><img src="{{ . }}" alt="{{ with $.Params.imageAlt }}{{ . }}{{ else }}{{ $.Title }}{{ end }}" loading="lazy"></span>
+    {{ end }}
+    {{ with .CurrentSection }}<span class="kicker card-cat">{{ .Title }}</span>{{ end }}
+    <h3>{{ partial "resolveyear" .Title }}</h3>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <span class="card-meta">
+        <span>{{ with .Params.auteur }}{{ index . 0 }}{{ else }}{{ if $isEN }}Editorial team{{ else }}La rédaction{{ end }}{{ end }}</span>
+        <span>{{ time.Format (cond $isEN "Jan 2, 2006" "2 January 2006") (default .Date .Lastmod) }}</span>
+    </span>
+</a>

@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+<section class="field hero-page">
+    <div class="container">
+        <nav class="breadcrumb kicker">
+            <a href="{{ cond $isEN "/en/" "/" }}">{{ if $isEN }}Home{{ else }}Accueil{{ end }}</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ .Title }}</span>
+        </nav>
+        <h1>{{ partial "resolveyear" .Title }}</h1>
+        {{ with .Description }}<p class="hero-lede">{{ . }}</p>{{ end }}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container container-narrow">
+        <div class="prose">
+            {{ .Content }}
+
+            {{ with .Params.faq }}
+            <div class="faq">
+                <h2>{{ if $isEN }}Frequently asked questions{{ else }}Questions fréquentes{{ end }}</h2>
+                {{ range . }}<div class="faq-item"><h3>{{ .question }}</h3><p>{{ .answer | markdownify }}</p></div>{{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

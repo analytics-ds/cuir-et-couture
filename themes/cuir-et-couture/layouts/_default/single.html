@@ -1,0 +1,130 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+{{- $home := cond $isEN "/en/" "/" -}}
+{{- $authorName := "" }}{{ with .Params.auteur }}{{ $authorName = index . 0 }}{{ end }}
+{{- $authorPage := "" }}{{ $authorRole := "" }}{{ $authorBio := "" }}{{ $authorPhoto := "" }}
+{{- with site.GetPage (printf "/%s" (cond $isEN "authors" "auteurs")) }}
+  {{- range .Pages }}{{ if eq .Title $authorName }}
+    {{- $authorPage = .RelPermalink }}{{ $authorRole = .Params.role }}{{ $authorBio = .Params.bio }}{{ $authorPhoto = .Params.photo }}
+  {{- end }}{{ end }}
+{{- end }}
+{{- $initials := "" }}{{ range (split $authorName " ") }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+
+<article>
+<section class="field hero-page">
+    <div class="container">
+        <nav class="breadcrumb kicker" aria-label="{{ if $isEN }}Breadcrumb{{ else }}Fil d'Ariane{{ end }}">
+            <a href="{{ $home }}">{{ if $isEN }}Home{{ else }}Accueil{{ end }}</a>
+            <span aria-hidden="true">/</span>
+            {{ with .CurrentSection }}{{ if .Title }}<a href="{{ .RelPermalink }}">{{ .Title }}</a><span aria-hidden="true">/</span>{{ end }}{{ end }}
+            <span>{{ .Title }}</span>
+        </nav>
+
+        <h1>{{ partial "resolveyear" .Title }}</h1>
+        {{ with .Description }}<p class="hero-lede">{{ . }}</p>{{ end }}
+
+        <div class="hero-meta">
+            {{ if $authorName }}
+            <span style="display:inline-flex;align-items:center;gap:10px">
+                <span class="avatar">{{ if $authorPhoto }}<img src="{{ strings.TrimPrefix "/" $authorPhoto | relURL }}" alt="{{ $authorName }}">{{ else }}{{ $initials }}{{ end }}</span>
+                <span>{{ if $isEN }}By{{ else }}Par{{ end }} <a href="{{ $authorPage }}">{{ $authorName }}</a></span>
+            </span>
+            {{ end }}
+            <span>{{ if $isEN }}Updated{{ else }}Mis à jour le{{ end }} {{ time.Format (cond $isEN "January 2, 2006" "2 January 2006") (default .Date .Lastmod) }}</span>
+            <span>{{ .ReadingTime }} {{ if $isEN }}min read{{ else }}min de lecture{{ end }}</span>
+        </div>
+    </div>
+</section>
+
+{{ with .Params.image }}
+<div class="container" style="padding-top:0">
+    <figure style="margin:0"><img src="{{ . }}" alt="{{ with $.Params.imageAlt }}{{ . }}{{ else }}{{ $.Title }}{{ end }}" width="1600" height="900" style="width:100%;height:auto;object-fit:cover;max-height:520px" loading="eager">
+    {{ with $.Params.imageCredit }}<figcaption style="font-size:.78rem;opacity:.6;margin-top:8px">{{ . }}</figcaption>{{ end }}</figure>
+</div>
+{{ end }}
+
+<div class="container article-layout">
+    <aside class="toc">
+        <p class="toc-title kicker">{{ if $isEN }}Contents{{ else }}Sommaire{{ end }}</p>
+        <nav>{{ .TableOfContents }}</nav>
+    </aside>
+
+    <div class="prose">
+        {{ with .Params.tldr }}
+        <aside class="tldr">
+            <h2>{{ if $isEN }}In short{{ else }}En bref{{ end }}</h2>
+            <ul>{{ range . }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+        </aside>
+        {{ end }}
+
+        {{ .Content }}
+
+        {{ with .Params.faq }}
+        <div class="faq">
+            <h2>{{ if $isEN }}Frequently asked questions{{ else }}Questions fréquentes{{ end }}</h2>
+            {{ range . }}
+            <div class="faq-item">
+                <h3>{{ .question }}</h3>
+                <p>{{ .answer | markdownify }}</p>
+            </div>
+            {{ end }}
+        </div>
+        {{ end }}
+
+        {{ with .Params.sources }}
+        <div class="sources">
+            <span class="kicker">{{ if $isEN }}Sources and further reading{{ else }}Sources et pour aller plus loin{{ end }}</span>
+            <ul>
+                {{ range . }}<li>{{ if .url }}<a href="{{ .url }}" rel="noopener">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}{{ with .note }} — {{ . }}{{ end }}</li>{{ end }}
+            </ul>
+        </div>
+        {{ end }}
+
+        {{ with .Params.tags }}
+        <div class="tags">{{ range . }}<a href="{{ (printf "tags/%s/" (. | urlize)) | relLangURL }}">{{ . }}</a>{{ end }}</div>
+        {{ end }}
+
+        {{ if $authorName }}
+        <div class="author-box">
+            <span class="avatar">{{ if $authorPhoto }}<img src="{{ strings.TrimPrefix "/" $authorPhoto | relURL }}" alt="{{ $authorName }}">{{ else }}{{ $initials }}{{ end }}</span>
+            <div>
+                <span class="kicker" style="opacity:.55">{{ if $isEN }}Written by{{ else }}Écrit par{{ end }}</span>
+                <h3><a href="{{ $authorPage }}" style="text-decoration:none">{{ $authorName }}</a></h3>
+                {{ with $authorRole }}<p style="margin-bottom:8px"><strong>{{ . }}</strong></p>{{ end }}
+                {{ with $authorBio }}<p>{{ . }}</p>{{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<div class="container">
+    <nav class="article-nav">
+        {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}"><span class="kicker">{{ if $isEN }}Previous{{ else }}Précédent{{ end }}</span><strong>{{ .Title }}</strong></a>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}"><span class="kicker">{{ if $isEN }}Next{{ else }}Suivant{{ end }}</span><strong>{{ .Title }}</strong></a>
+        {{ end }}
+    </nav>
+</div>
+</article>
+
+<script>
+(function(){
+  var links = document.querySelectorAll('.toc nav a');
+  var items = Array.prototype.slice.call(links).map(function(a){
+    var id = (a.getAttribute('href')||'').replace('#','');
+    return { link: a, el: id ? document.getElementById(id) : null };
+  }).filter(function(s){ return s.el; });
+  function onScroll(){
+    var y = window.scrollY + 140, current = null;
+    items.forEach(function(s){ if (s.el.offsetTop <= y) current = s; });
+    links.forEach(function(a){ a.classList.remove('is-active'); });
+    if (current) current.link.classList.add('is-active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+{{ end }}

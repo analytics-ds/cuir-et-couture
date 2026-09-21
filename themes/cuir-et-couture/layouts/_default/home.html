@@ -1,0 +1,81 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+{{- $sections := slice -}}
+{{- range .Site.Menus.main -}}
+  {{- with site.GetPage .URL }}{{ $sections = $sections | append . }}{{ end -}}
+{{- end -}}
+{{- $hubs := slice -}}
+{{- range .Site.Menus.main -}}{{ $hubs = $hubs | append (strings.TrimSuffix "/" (strings.TrimPrefix "/" (replace .URL "/en/" ""))) }}{{- end -}}
+{{- $posts := (where .Site.RegularPages "Section" "in" $hubs).ByDate.Reverse -}}
+
+<section class="field hero-home">
+    <div class="container">
+        <h1 class="hero-title">Cuir <span class="et">et</span><span class="line-2">Couture</span></h1>
+
+        <div class="hero-grid">
+            <p class="hero-lede">
+                {{ if $isEN }}
+                The reference magazine on leather and couture craftsmanship. We take apart hides, stretch, ateliers and silhouettes, and we name the <em>houses</em> that do it right.
+                {{ else }}
+                Le média de référence sur le cuir et le savoir-faire couture. On démonte les peaux, le stretch, les ateliers et les silhouettes, et on nomme les <em>maisons</em> qui le font bien.
+                {{ end }}
+            </p>
+            <div class="hero-side">
+                <span class="kicker">{{ if $isEN }}Independent · Paris · since {{ .Site.Params.organizationFounded }}{{ else }}Indépendant · Paris · depuis {{ .Site.Params.organizationFounded }}{{ end }}</span>
+                <p>{{ if $isEN }}No sponsored content, no affiliate links. Every claim is sourced, dated and updated.{{ else }}Aucun contenu sponsorisé, aucun lien d'affiliation. Chaque affirmation est sourcée, datée et mise à jour.{{ end }}</p>
+                <div class="hero-actions">
+                    <a class="pill" href="{{ (cond $isEN "about/" "a-propos/") | relLangURL }}"><span>{{ if $isEN }}Our method{{ else }}Notre méthode{{ end }}</span></a>
+                    <a class="pill" href="#rubriques"><span>{{ if $isEN }}The four sections{{ else }}Les quatre rubriques{{ end }}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="rubriques">
+    <div class="container">
+        <div class="section-head">
+            <h2>{{ if $isEN }}Four territories{{ else }}Quatre territoires{{ end }}</h2>
+            <span class="kicker">{{ if $isEN }}Index{{ else }}Sommaire{{ end }}</span>
+        </div>
+
+        <div class="cluster-index">
+            {{ range $i, $s := $sections }}
+            <a class="cluster-row" href="{{ $s.RelPermalink }}">
+                <span class="cluster-num">{{ printf "%02d" (add $i 1) }}</span>
+                <span class="cluster-name">{{ $s.Title }}</span>
+                <span class="cluster-desc">{{ $s.Params.tagline | default $s.Description }}</span>
+                <span class="cluster-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+{{ with .Content }}
+<section class="section" style="padding-top:0">
+    <div class="container">
+        <div class="prose">{{ . }}</div>
+    </div>
+</section>
+{{ end }}
+
+<section class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-head">
+            <h2>{{ if $isEN }}Latest{{ else }}Derniers articles{{ end }}</h2>
+            <span class="kicker">{{ if $isEN }}{{ len $posts }} published{{ else }}{{ len $posts }} publiés{{ end }}</span>
+        </div>
+
+        {{ if $posts }}
+        <div class="cards">
+            {{ range first 9 $posts }}
+            {{ partial "card.html" . }}
+            {{ end }}
+        </div>
+        {{ else }}
+        <p class="empty-note">{{ if $isEN }}First articles coming soon.{{ else }}Les premiers articles arrivent.{{ end }}</p>
+        {{ end }}
+    </div>
+</section>
+{{ end }}

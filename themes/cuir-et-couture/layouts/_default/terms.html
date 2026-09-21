@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+<section class="field hero-page">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="cluster-index">
+            {{ range .Data.Terms.Alphabetical }}
+            <a class="cluster-row" href="{{ .Page.RelPermalink }}">
+                <span class="cluster-num">{{ .Count }}</span>
+                <span class="cluster-name">{{ .Page.Title }}</span>
+                <span class="cluster-desc">{{ .Page.Params.role }}</span>
+                <span class="cluster-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

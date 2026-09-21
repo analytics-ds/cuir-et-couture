@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Antoine Lemercier, atelier et savoir-faire">
+  <title>Antoine Lemercier, atelier et savoir-faire</title>
+  <defs>
+    <clipPath id="clip-antoine-lemercier"><circle cx="256" cy="256" r="256"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip-antoine-lemercier)">
+    <circle cx="256" cy="256" r="256" fill="#8A5A36"/>
+    <circle cx="256" cy="268" r="214" fill="#6F4629"/>
+
+    <!-- buste -->
+    <path d="M78 512c0-86 62-130 178-130s178 44 178 130z" fill="#EFE8DC"/>
+    <!-- col -->
+    <path d="M196 392l60 62 60-62 26 14-86 96-86-96z" fill="#E0D7C6"/>
+    
+
+    <!-- cou -->
+    <path d="M222 320h68v62c0 19-68 19-68 0z" fill="#DCA478"/>
+
+    <!-- oreilles -->
+    <circle cx="168" cy="252" r="21" fill="#EFB98C"/>
+    <circle cx="344" cy="252" r="21" fill="#EFB98C"/>
+
+    
+
+    <!-- cheveux, masse haute -->
+    <rect x="161" y="112" width="190" height="212" rx="95" fill="#241C16"/>
+    <!-- visage -->
+    <rect x="171" y="148" width="170" height="204" rx="85" fill="#EFB98C"/>
+    <path d="M171 214c4-46 40-72 85-72s81 26 85 72c-14-34-40-44-85-44s-71 10-85 44z" fill="#241C16"/>
+
+    <!-- sourcils -->
+    <rect x="200" y="216" width="42" height="10" rx="5" fill="#241C16"/>
+    <rect x="270" y="216" width="42" height="10" rx="5" fill="#241C16"/>
+    <!-- yeux -->
+    <circle cx="221" cy="248" r="12" fill="#14110D"/>
+    <circle cx="291" cy="248" r="12" fill="#14110D"/>
+    <!-- nez -->
+    <path d="M256 250v22c0 7-6 11-13 11" fill="none" stroke="#DCA478" stroke-width="9" stroke-linecap="round"/>
+    <!-- bouche -->
+    <path d="M232 304h48c0 16-11 27-24 27s-24-11-24-27z" fill="#8C3A2F"/>
+    <path d="M232 304h48c0 6-11 9-24 9s-24-3-24-9z" fill="#F6F1E8"/>
+    
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+{{- $frURL := "/" -}}
+{{- $enURL := "/en/" -}}
+{{- if $isEN }}{{ $enURL = .RelPermalink }}{{ else }}{{ $frURL = .RelPermalink }}{{ end -}}
+{{- range .Translations -}}
+  {{- if in .RelPermalink "/en/" }}{{ $enURL = .RelPermalink }}{{ else }}{{ $frURL = .RelPermalink }}{{ end -}}
+{{- end }}
+
+<div class="topline">
+    <div class="topline-inner">
+        <span class="kicker">{{ .Site.Params.baseline }}</span>
+        <div class="lang-switch">
+            <a href="{{ $frURL }}" hreflang="fr" class="{{ if not $isEN }}is-active{{ end }}">FR</a>
+            <a href="{{ $enURL }}" hreflang="en" class="{{ if $isEN }}is-active{{ end }}">EN</a>
+        </div>
+    </div>
+</div>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a href="{{ "" | relLangURL }}" class="wordmark" aria-label="{{ .Site.Title }}">
+            {{- $logo := .Site.Params.logoFile -}}
+            {{- if and $logo (fileExists (printf "static/%s" $logo)) -}}
+            <img src="{{ $logo | relURL }}" alt="{{ .Site.Title }}" width="200" height="42">
+            {{- else -}}
+            <span>Cuir</span><span class="amp">et</span><span>Couture</span>
+            {{- end -}}
+        </a>
+
+        <nav class="site-nav" id="nav-principal">
+            {{ range .Site.Menus.main }}
+            <a href="{{ .URL | relURL }}" class="{{ if $.IsMenuCurrent "main" . }}is-active{{ else if $.HasMenuCurrent "main" . }}is-active{{ end }}">{{ .Name }}</a>
+            {{ end }}
+            <a href="{{ (cond $isEN "about/" "a-propos/") | relLangURL }}">{{ if $isEN }}The magazine{{ else }}Le média{{ end }}</a>
+        </nav>
+
+        <div class="header-actions">
+            <button class="icon-btn theme-toggle" type="button" aria-label="{{ if $isEN }}Switch theme{{ else }}Changer de thème{{ end }}">
+                <span class="theme-moon" aria-hidden="true">&#9789;</span>
+                <span class="theme-sun" aria-hidden="true">&#9728;</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-principal">&#9776;</button>
+        </div>
+    </div>
+</header>
+
+<script>
+(function(){
+  var t = document.querySelector('.menu-toggle');
+  if (t) t.addEventListener('click', function(){
+    var nav = document.getElementById('nav-principal');
+    var open = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', String(!open));
+    nav.classList.toggle('is-open');
+  });
+  var b = document.querySelector('.theme-toggle');
+  if (b) b.addEventListener('click', function(){
+    var r = document.documentElement;
+    var dark = r.getAttribute('data-theme') === 'dark';
+    if (dark) { r.removeAttribute('data-theme'); try{localStorage.setItem('theme','light');}catch(e){} }
+    else { r.setAttribute('data-theme','dark'); try{localStorage.setItem('theme','dark');}catch(e){} }
+  });
+})();
+</script>

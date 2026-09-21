@@ -1,0 +1,111 @@
+baseURL = "https://cuir-et-couture.fr/"
+removePathAccents = true
+title = "Cuir et Couture"
+theme = "cuir-et-couture"
+defaultContentLanguage = "fr"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+enableEmoji = false
+buildFuture = false
+
+[params]
+  # Peau graphique du site : "noir" (defaut), "cognac", "parchemin".
+  # Change l'aplat des heros et du footer, rien d'autre.
+  skin = "noir"
+  logoFile = "images/logo.jpg"
+  ogImage = "images/logo-carre.jpg"
+  organizationFounded = "2026"
+  email = "redaction@cuir-et-couture.fr"
+  instagram = ""
+  pinterest = ""
+  x = ""
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[taxonomies]
+  auteur = "auteurs"
+  tag = "tags"
+
+[languages]
+  [languages.fr]
+    languageCode = "fr-FR"
+    languageName = "Français"
+    weight = 1
+    title = "Cuir et Couture"
+    contentDir = "content/fr"
+    [languages.fr.params]
+      description = "Le média du cuir et du savoir-faire couture. Matières, cuir stretch, ateliers, maisons et style : les guides et comparatifs de référence."
+      baseline = "Le média du cuir et du savoir-faire couture"
+    [languages.fr.taxonomies]
+      auteur = "auteurs"
+      tag = "tags"
+
+    [[languages.fr.menus.main]]
+      identifier = "cuir"
+      name = "Cuir"
+      url = "/cuir/"
+      weight = 1
+    [[languages.fr.menus.main]]
+      identifier = "cuir-stretch"
+      name = "Stretch"
+      url = "/cuir-stretch/"
+      weight = 2
+    [[languages.fr.menus.main]]
+      identifier = "couture"
+      name = "Couture"
+      url = "/couture/"
+      weight = 3
+    [[languages.fr.menus.main]]
+      identifier = "mode"
+      name = "Mode"
+      url = "/mode/"
+      weight = 4
+
+  [languages.en]
+    languageCode = "en-US"
+    languageName = "English"
+    weight = 2
+    title = "Cuir et Couture"
+    contentDir = "content/en"
+    [languages.en.params]
+      description = "The magazine of leather and couture craftsmanship. Hides, stretch leather, ateliers, houses and style: reference guides and comparisons."
+      baseline = "The magazine of leather and couture craftsmanship"
+    [languages.en.taxonomies]
+      auteur = "authors"
+      tag = "tags"
+
+    [[languages.en.menus.main]]
+      identifier = "leather"
+      name = "Leather"
+      url = "/en/leather/"
+      weight = 1
+    [[languages.en.menus.main]]
+      identifier = "stretch-leather"
+      name = "Stretch"
+      url = "/en/stretch-leather/"
+      weight = 2
+    [[languages.en.menus.main]]
+      identifier = "couture"
+      name = "Couture"
+      url = "/en/couture/"
+      weight = 3
+    [[languages.en.menus.main]]
+      identifier = "style"
+      name = "Style"
+      url = "/en/style/"
+      weight = 4
+
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+
+[outputs]
+  home = ["HTML", "RSS", "llms"]

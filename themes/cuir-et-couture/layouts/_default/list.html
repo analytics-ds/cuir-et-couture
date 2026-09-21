@@ -1,0 +1,60 @@
+{{ define "main" }}
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+{{- $home := cond $isEN "/en/" "/" -}}
+
+<section class="field hero-page">
+    <div class="container">
+        <nav class="breadcrumb kicker" aria-label="{{ if $isEN }}Breadcrumb{{ else }}Fil d'Ariane{{ end }}">
+            <a href="{{ $home }}">{{ if $isEN }}Home{{ else }}Accueil{{ end }}</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ .Title }}</span>
+        </nav>
+        <h1>{{ partial "resolveyear" .Title }}</h1>
+        {{ with .Params.tagline | default .Description }}<p class="hero-lede">{{ . }}</p>{{ end }}
+        <div class="hero-meta">
+            <span>{{ len .Pages }} {{ if $isEN }}articles{{ else }}articles{{ end }}</span>
+            {{ with .Lastmod }}<span>{{ if $isEN }}Updated{{ else }}Mis à jour{{ end }} {{ time.Format (cond $isEN "Jan 2, 2006" "2 January 2006") . }}</span>{{ end }}
+        </div>
+    </div>
+</section>
+
+{{ with .Content }}
+<section class="section" style="padding-bottom:0">
+    <div class="container"><div class="prose">{{ . }}</div></div>
+</section>
+{{ end }}
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>{{ if $isEN }}All articles{{ else }}Tous les articles{{ end }}</h2>
+            <span class="kicker">{{ .Title }}</span>
+        </div>
+
+        {{ $pages := .Pages.ByDate.Reverse }}
+        {{ if $pages }}
+        <div class="cards">
+            {{ range $pages }}{{ partial "card.html" . }}{{ end }}
+        </div>
+        {{ else }}
+        <p class="empty-note">{{ if $isEN }}This section is being written. Come back shortly.{{ else }}Cette rubrique est en cours d'écriture. Revenez très vite.{{ end }}</p>
+        {{ end }}
+    </div>
+</section>
+
+{{ with .Params.faq }}
+<section class="section" style="padding-top:0">
+    <div class="container container-narrow">
+        <div class="faq">
+            <h2>{{ if $isEN }}Frequently asked questions{{ else }}Questions fréquentes{{ end }}</h2>
+            {{ range . }}
+            <div class="faq-item">
+                <h3>{{ .question }}</h3>
+                <p>{{ .answer | markdownify }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+{{ end }}

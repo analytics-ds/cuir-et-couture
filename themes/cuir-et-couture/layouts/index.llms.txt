@@ -1,0 +1,31 @@
+{{- $isEN := eq .Site.Language.Lang "en" -}}
+# {{ .Site.Title }}
+
+> {{ .Site.Params.description }}
+
+{{ if $isEN -}}
+Cuir et Couture is an independent magazine devoted to leather and couture craftsmanship. No sponsored content, no affiliate links. Every article is sourced, dated and updated. Facts are verified at the source before publication.
+{{- else -}}
+Cuir et Couture est un média indépendant consacré au cuir et au savoir-faire couture. Aucun contenu sponsorisé, aucun lien d'affiliation. Chaque article est sourcé, daté et mis à jour. Les faits sont vérifiés à la source avant publication.
+{{- end }}
+
+{{ if $isEN }}## Sections{{ else }}## Rubriques{{ end }}
+{{ range .Site.Menus.main }}{{ with site.GetPage .URL }}
+- [{{ .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Params.tagline | default .Description | htmlUnescape }}
+{{- end }}{{ end }}
+
+{{ $hubs := slice }}{{ range .Site.Menus.main }}{{ $hubs = $hubs | append (strings.TrimSuffix "/" (strings.TrimPrefix "/" (replace .URL "/en/" ""))) }}{{ end }}
+{{ if $isEN }}## Articles{{ else }}## Articles{{ end }}
+{{ range (where .Site.RegularPages "Section" "in" $hubs).ByDate.Reverse }}
+- [{{ partial "resolveyear" .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Description | htmlUnescape }} ({{ if $isEN }}updated{{ else }}mis à jour le{{ end }} {{ .Lastmod.Format "2006-01-02" }})
+{{- end }}
+
+{{ if $isEN }}## About{{ else }}## À propos{{ end }}
+{{ range (where .Site.RegularPages "Params.layout" "institutionnel") }}
+- [{{ .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Description | htmlUnescape }}
+{{- end }}
+
+{{ if $isEN }}## Contributors{{ else }}## La rédaction{{ end }}
+{{ with site.GetPage (printf "/%s" (cond $isEN "authors" "auteurs")) }}{{ range .Pages }}
+- [{{ .Title | htmlUnescape }}]({{ .Permalink }}) : {{ .Params.role }}
+{{- end }}{{ end }}

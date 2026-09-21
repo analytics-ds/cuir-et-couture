@@ -1,0 +1,14 @@
+public/
+resources/
+.hugo_build.lock
+.DS_Store
+node_modules/
+
+# Documentation interne datashake : jamais poussee sur le repo public (neutralite du media)
+CLAUDE.md
+MEMORY.md
+ETAT-DEV.md
+.claude/
+
+# Sources de marque : texture de cuir sous licence, ne pas publier
+brand/
