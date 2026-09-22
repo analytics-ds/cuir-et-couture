@@ -7,8 +7,10 @@
     <title>{{ with .Params.seoTitle }}{{ partial "resolveyear" . }}{{ else }}{{ if $.IsHome }}{{ $.Site.Title }} — {{ $.Site.Params.baseline }}{{ else }}{{ partial "resolveyear" $.Title }} | {{ $.Site.Title }}{{ end }}{{ end }}</title>
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 
+    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
     <link rel="icon" type="image/png" href="{{ "images/favicon.png" | relURL }}">
     <link rel="apple-touch-icon" href="{{ "images/apple-touch-icon.png" | relURL }}">
+    <link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
     <meta name="theme-color" content="#12100E">
 
     {{ partial "seo-head.html" . }}
