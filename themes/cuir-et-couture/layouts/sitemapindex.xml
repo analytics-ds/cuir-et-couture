@@ -25,8 +25,8 @@
     <lastmod>{{ safeHTML (.Lastmod.Format "2006-01-02T15:04:05-07:00") }}</lastmod>{{ end }}
     <changefreq>{{ if .IsHome }}daily{{ else if .IsNode }}weekly{{ else }}monthly{{ end }}</changefreq>
     <priority>{{ if .IsHome }}1.0{{ else if .IsNode }}0.8{{ else }}0.7{{ end }}</priority>
-    {{- $p := . }}{{ range .AllTranslations }}
-    <xhtml:link rel="alternate" hreflang="{{ if in .RelPermalink "/en/" }}en{{ else }}fr{{ end }}" href="{{ .Permalink }}" />
+    {{- range partial "hreflang-alternates.html" . }}
+    <xhtml:link rel="alternate" hreflang="{{ .lang }}" href="{{ .url }}" />
     {{- end }}
   </url>
 {{- end }}

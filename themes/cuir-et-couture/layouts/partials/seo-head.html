@@ -18,18 +18,10 @@
 
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{- if .IsTranslated }}
-{{- $xDefault := .Permalink }}
-{{- $currentLang := .Lang }}
-<link rel="alternate" hreflang="{{ $currentLang }}" href="{{ .Permalink }}">
-{{- range .Translations }}
-{{- $tLang := "fr" -}}{{- if in .RelPermalink "/en/" -}}{{- $tLang = "en" -}}{{- end -}}
-<link rel="alternate" hreflang="{{ $tLang }}" href="{{ .Permalink }}">
-{{- if eq $tLang "fr" }}{{ $xDefault = .Permalink }}{{ end }}
+{{- range partial "hreflang-alternates.html" . }}
+<link rel="alternate" hreflang="{{ .lang }}" href="{{ .url }}">
 {{- end }}
-{{- if eq $currentLang "fr" }}{{ $xDefault = .Permalink }}{{ end }}
-<link rel="alternate" hreflang="x-default" href="{{ $xDefault }}">
-{{- end }}
+{{- if and .IsHome (eq .Language.Lang "fr") }}{{ partial "check-translations.html" . }}{{ end }}
 
 <meta property="og:title" content="{{ with .Params.seoTitle }}{{ partial "resolveyear" . }}{{ else }}{{ partial "resolveyear" $.Title }}{{ end }}">
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
